@@ -1,8 +1,8 @@
 class _Human {
     constructor(name, age, gender = Sim.RandomGender(), family, x = {}) {
-        this.gender = gender===true||gender=="male"?true:false;
+        this.male = gender===true||gender=="male"?true:false;
 
-        this.name = name||Sim.GenerateName(this.gender?"male":"female");
+        this.name = name||Sim.GenerateName(this.male?"male":"female");
 
         if (!this.name.full)
             this.name.full = `${this.name.first} ${this.name.last}`;
@@ -68,13 +68,18 @@ class _Human {
     }
 
     get DName() {
-        let c = this.gender!==null?this.gender?39:213:124; //Male:Female:SUPER AIDS//
+        let c = this.male!==null?this.male?39:213:124; //Male:Female:SUPER AIDS//
 
         return this.name.full.colour(c);
     }
     //For displays
     get CondensedPersonality () {
 
+    }
+
+    GenderText (capital) {
+        if (this.male) {if (capital) {return 'He'} else {return 'he'}}
+        else if (!this.male) {if (capital) {return 'She'} else {return 'she'}};
     }
 
     //Rolls a dice and sees if this person is likely to react positively.
@@ -229,9 +234,9 @@ class _Human {
     Die (cause) {
         this.dead = true;
         switch (cause) {
-            case "Age": Sim.events.push(`${this.DName}, aged ${this.age}, died from old age.`); break;
-            case "Collapse": Sim.events.push(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. `); break;
-            default: Sim.events.push(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}.`); break;
+            case "Age": Sim.events.push(`${this.DName}, aged ${this.age}, died from old age. ${this.GenderText(true)} was a ${this.job.DName}.`); break;
+            case "Collapse": Sim.events.push(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. ${this.GenderText(true)} was a ${this.job.DName}.`); break;
+            default: Sim.events.push(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}. ${this.GenderText(true)} was a ${this.job.DName}.`); break;
         }
         this.deathReason = cause;
     }
@@ -243,7 +248,7 @@ class _Human {
 
         switch (this.age) {
             case 5:
-                e.push(`${this.DName} is starting ${this.gender?"his":"her"} first year of school.`);
+                e.push(`${this.DName} is starting ${this.male?"his":"her"} first year of school.`);
                 break;
             case 13:
                 e.push(`It's ${this.DName}'s 13th birthday!`);
@@ -268,15 +273,15 @@ class _Human {
     }
 
     TriggerSuperAIDs() {
-        this.gender = null;
+        this.male = null;
         this.SuperAIDs = true;
 
         Sim.events.push(`${this.DName} has caught ${"SUPER AIDS".colour(196)}!`);
     }
 
     RerollGeneration() {
-        this.gender = Sim.RandomGender()=="male"?true:false;
-        this.name = Sim.GenerateName(this.gender?"male":"female");
+        this.male = Sim.RandomGender()=="male"?true:false;
+        this.name = Sim.GenerateName(this.male?"male":"female");
     }
 }
 
