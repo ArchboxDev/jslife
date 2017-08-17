@@ -54,6 +54,8 @@ class _Job {
     Yearly() {
         // Todo: Change based on motivation and skills/traits //
         this.AddExp(Math.floor(Math.random()*Math.floor(Sim.Roll()?150:Sim.Roll()?50:25/2/(10/2))));
+        
+        this.employee.Pay(this.Pay);
     }
 }
 
