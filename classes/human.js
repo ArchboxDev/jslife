@@ -180,6 +180,7 @@ class _Human {
     ChooseJob() {
         const s = this.SuitableJobs;
         this.job = new Sim.Job(this, s[Math.floor(Math.random()*s.length)]);
+        console.log(`${this.DName} has became a ${this.job.DName}!`);
     }
 
     DeathCheck() {
@@ -272,7 +273,7 @@ class _Human {
 
         switch (this.age) {
             case 5:
-                e.push(`${this.DName} is starting ${this.male?"his":"her"} first year of school.`);
+                e.push(`${this.DName} is starting ${this.GenderText(false)} first year of school.`);
                 break;
             case 13:
                 e.push(`It's ${this.DName}'s 13th birthday!`);

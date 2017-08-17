@@ -183,7 +183,7 @@ class _Sim {
         #############################################################################
         `.colour(220));
 
-        console.log();
+        console.log(`Running on ${process.platform} ${process.arch}.`.colour(221));
 
         console.log("[Loading Modules]".colour(28));
         this.LoadStuffs();
