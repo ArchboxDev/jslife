@@ -1,5 +1,5 @@
 // Name : Base Pay //
-const Jobs = {
+Sim.Jobs = {
     "Athlete" : 240,
     "Cashier" : 100,
     "Chef"    : 200,
@@ -15,14 +15,30 @@ const Jobs = {
     "Writer"  : 150,
     "_Invalid": 0
 }
-const JobsN = Object.keys(Jobs);
+Sim.JobsN = Object.keys(Sim.Jobs);
+
+Sim.JobPersoMatches = {
+    "Athlete" : "Energy",
+    "Cashier" : "Mind",
+    "Chef"    : "Nature",
+    "Criminal": "Mind",
+    "Dentist" : "Nature",
+    "Guard"   : "Tactics",
+    "Lawyer"  : "Tactics",
+    "Painter" : "Mind",
+    "Pilot"   : "Mind",
+    "Police"  : "Tactics",
+    "Teacher" : "Mind",
+    "Vet"     : "Nature",
+    "Writer"  : "Nature"
+}
 
 class _Job {
     constructor(employee, job, level = 1, exp = 0) {
         this.employee = employee;
 
         if (!job)
-            job = JobsN[Math.floor(Math.random()*(JobsN.length-1))];
+            job = Sim.JobsN[Math.floor(Math.random()*(Sim.JobsN.length-1))];
         this.job = job;
 
         this.level = level;
@@ -34,7 +50,7 @@ class _Job {
     }
 
     get Pay() {
-        const base = Jobs[this.job]||Jobs._Invalid;
+        const base = Sim.Jobs[this.job]||Sim.Jobs._Invalid;
         return base*2*(this.level/2);
     }
 
