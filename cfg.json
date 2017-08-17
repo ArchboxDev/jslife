@@ -1,0 +1,8 @@
+{
+    "Globals" : {
+        "fs"     : "fs"
+    },
+    "Modules" : {
+        "colour" : "./colour"
+    }
+}
