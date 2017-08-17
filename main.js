@@ -104,7 +104,7 @@ class _Sim {
 
         for (const p of this.people) {
             if (!p.dead) {
-                p.Birthday();
+                p.Yearly();
                 if (p.age>16)
                     p.DeathCheck();
             }
