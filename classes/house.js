@@ -15,6 +15,13 @@ class _House {
         this.quality = this.CalcQuality();
         this.comfort = this.CalcComfort();
     }
+    Collapse () {
+        for (let i = 0; i < this.family.members.length; i++) {
+            if(this.family.members[i].HealthValues.Fitness < Math.random() * (this.quality + 200)) this.family.members[i].Die("Collapse") ;
+        }
+        this.family.house = null;
+        this.family.MoveIn(); //for now
+    }
 }
 
 Sim.House = _House;
