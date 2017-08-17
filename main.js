@@ -171,7 +171,7 @@ class _Sim {
 
     Init() {
         console.log("[Life Simulator]".colour(214));
-        console.log("Written out of boredom by bumet1".colour(220));
+        console.log("Written out of boredom by bumet1, mount2010, and various contributors".colour(220));
 
         console.log();
 
@@ -205,7 +205,10 @@ class _Sim {
         process.stdin.setEncoding("utf8");
 
         process.stdin.on("data", (key)=>{
-            if (key == "\u0003") process.exit();
+            if (key == "\u0003") {
+                console.log("[Exit] Thanks for playing!".colour(220));
+                process.exit()
+            }
             else if (this.eIOOn) this.EventsUpdate();
         });
     }
