@@ -39,6 +39,9 @@ class _Human {
             this[v] = x[v];
 
         this.CreateTraits();
+        
+        if (this.age>=18)
+            this.ChooseJob();
 
         this.dead = false;
 
@@ -148,6 +151,11 @@ class _Human {
             this.Traits[t] = b;
         }
     }
+    
+    ChooseJob() {
+        // Todo: Change based on traits, skills, etc //
+        this.job = new Sim.Job(this);
+    }
 
     DeathCheck() {
            // Visualisation                         //
@@ -228,25 +236,35 @@ class _Human {
         this.deathReason = cause;
     }
 
-    Birthday() {
+    Yearly() {
         this.age++;
 
-        let e;
+        const e = [];
 
-        if (this.age===5)
-            e = `${this.DName} is starting ${this.gender?"his":"her"} first year of school.`
+        switch (this.age) {
+            case 5:
+                e.push(`${this.DName} is starting ${this.gender?"his":"her"} first year of school.`);
+                break;
+            case 13:
+                e.push(`It's ${this.DName}'s 13th birthday!`);
+                break;
+            case 18:
+                e.push(`It's ${this.DName}'s 18th birthday!`);
+                break;
+            case 21:
+                e.push(`It's ${this.DName}'s 21st birthday!`);
+                break;
+            case 100:
+                e.push(`It's ${this.DName}'s 100th birthday!`);
+        }
 
-        if (this.age===13)
-            e = `It's ${this.DName}'s 13th birthday!`;
-        else if (this.age===18)
-            e = `It's ${this.DName}'s 18th birthday!`;
-        else if (this.age===21)
-            e = `It's ${this.DName}'s 21st birthday!`;
-        else if (this.age===100)
-            e = `It's ${this.DName}'s 100th birthday!`;
+        if (this.job)
+            this.job.Yearly();
+        else if (this.age>=18)
+            this.ChooseJob();
         
-        if (e)
-            Sim.events.push(e);
+        for (const ev of e)
+            Sim.events.push(ev);
     }
 
     TriggerSuperAIDs() {
