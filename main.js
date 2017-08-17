@@ -170,8 +170,18 @@ class _Sim {
     }
 
     Init() {
-        console.log("[Life Simulator]".colour(214));
-        console.log("Written out of boredom by bumet1, mount2010, and various contributors".colour(220));
+        console.log(`
+        #############################################################################
+        #                                                   prealpha 17/8/17        #
+        #     #   ### ### ###   #== ### ##   # # # #   ### ### ### ###              #
+        #     #    #  #   #__   ###  #  # # ## # # #   # #  #  # # # #              #
+        #     #    #  ### #       #  #  #  # # # # #   ###  #  # # ###              #
+        #     ### ### #   ###   ### ### #    # ### ### # #  #  ### # |              #
+        #     written out of boredom by Bubbie, Mount2010, and other contributors   #
+        #     also see the Python port pylife and the Java port jarlife             #
+        #                                                                           #
+        #############################################################################
+        `.colour(220));
 
         console.log();
 
