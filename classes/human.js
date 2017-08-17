@@ -23,6 +23,14 @@ class _Human {
             Happiness: 100
         }
 
+        //MBTI values, using the "closed" values as 0 and the "open" values as 1000. 
+        this.PersonalityValues = {
+            Introvertion: Math.floor(Math.random()*1000),
+            Observance: Math.floor(Math.random()*1000),
+            Thinking: Math.floor(Math.random()*1000),
+            Judging: Math.floor(Math.random()*1000)
+        }
+
         this.Traits = {};
 
         this.Relationships = [];
@@ -60,6 +68,43 @@ class _Human {
         let c = this.gender!==null?this.gender?39:213:124; //Male:Female:SUPER AIDS//
 
         return this.name.full.colour(c);
+    }
+    //For displays
+    get CondensedPersonality () {
+
+    }
+
+    //Rolls a dice and sees if this person is likely to react positively.
+    PersonalityDice (stimuli) {
+        //If the person has a indicator higher (or lower, specify true for the first argument) than the indicator here, they will react positively. Else, they will be neutral.
+        const stimuliTypes = {
+            //According to 16personalities research (https://www.16personalities.com/articles/personality-bites-the-types-and-stress-eating)
+            Eating: {
+                Introvertion: ["lower", 300],
+                Observance: ["higher", 600],
+                Thinking: ["higher", 700],
+                Judging: ["lower", 300]
+            }
+        }
+
+        if (!stimuli) {throw new Error("You need to pass a type of stimuli to the Personality Dice.")};
+        if (stimuli in stimuliTypes) {
+            let reaction = 500;
+            //spent 10 minutes mulling over the variable name kms
+            const stim = stimuliTypes[stimuli];
+            for (let i in stim) {
+                const val = this.PersonalityValues[i];
+                if (stim[i][0] === "lower") {
+                    reaction = val <= stim[i][1] ?reaction+100:reaction-100;
+                }
+                else if (stim[i][0] === "higher") {
+                    reaction = val >= stim[i][1]?reaction+100:reaction-100;
+                }
+            }
+            if (reaction >= 500) return true;
+            else return false; 
+        }
+        else {throw new Error("Stimuli passed into the Personality Dice is not a vaild stimuli")}
     }
 
     CreateTraits() {

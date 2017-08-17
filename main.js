@@ -131,11 +131,15 @@ class _Sim {
 
                 console.log(`[Year ${this.year}]`.colour(214));
                 console.log("And everybody lived happily ever after. Hopefully.".colour(220));
-                console.log();
                 for (const h of this.families) {
                     console.log(`The ${h.DName} Family`);
                     for (const f of h.members) {
                         console.log(`- ${f.DName} (${f.age}), died of ${f.deathReason}`);
+
+                        /*DEBUG
+                        console.log(`${f.PersonalityDice("Eating")}`);
+                        console.log(`${f.PersonalityValues.Introvertion} ${f.PersonalityValues.Observance} ${f.PersonalityValues.Thinking} ${f.PersonalityValues.Judging}`);
+                        //*/
                     }
                 }
                 this._eventsIO_Off();
