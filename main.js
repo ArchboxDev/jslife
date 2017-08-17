@@ -1,5 +1,5 @@
 require("./lib/config");
-require("keypress")(process.stdin);
+//require("keypress")(process.stdin);
 
 class _Sim {
     constructor() {
@@ -100,12 +100,23 @@ class _Sim {
     Year() {
         this.year++;
 
+        this.DoActivities();
+
         for (const p of this.people) {
             if (!p.dead) {
                 p.Birthday();
                 if (p.age>16)
                     p.DeathCheck();
             }
+        }
+    }
+    
+    DoActivities () {
+        for (const i of this.families) {
+            if (i.house.quality < 5 && Sim.Roll() === true) {
+                console.log(`Collapse! The ${i.name} family's house is collapsing.`.colour(1)); 
+                i.house.Collapse()
+            }; 
         }
     }
 
@@ -124,7 +135,7 @@ class _Sim {
                 for (const h of this.families) {
                     console.log(`The ${h.DName} Family`);
                     for (const f of h.members) {
-                        console.log(`- ${f.DName} (${f.age})`);
+                        console.log(`- ${f.DName} (${f.age}), died of ${f.deathReason}`);
                     }
                 }
                 this._eventsIO_Off();
@@ -146,7 +157,7 @@ class _Sim {
         this.events = [];
 
         if (this.year === 1)
-            console.log("Press [ENTER] to continue to the next year.");
+            console.log("Press any key to continue to the next year.");
 
         this._eventsIO_On();
     }
@@ -184,11 +195,13 @@ class _Sim {
         
         this.EventsUpdate();
 
+        process.stdin.setRawMode(true);
+        process.stdin.resume();
         process.stdin.setEncoding("utf8");
 
-        process.stdin.on("keypress", (ch, key)=>{
-            if (this.eIOOn)
-                this.EventsUpdate();
+        process.stdin.on("data", (key)=>{
+            if (key == "\u0003") process.exit();
+            else if (this.eIOOn) this.EventsUpdate();
         });
     }
 }

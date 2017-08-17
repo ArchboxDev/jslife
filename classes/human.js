@@ -148,8 +148,6 @@ class _Human {
 
             if (Roll>Min && Roll<Max) {
                 if (BI !== "Rand") {
-                    this.dead = true;
-
                     if (BI === "Health") {
                         let s;
 
@@ -161,11 +159,11 @@ class _Human {
                             s = sel[Math.floor(Math.random()*sel.length)];
                         }
 
-                        Sim.events.push(`${this.DName}, aged ${this.age}, died from ${s.colour(160)}.`);
+                        this.Die(s);
                     }
 
                     if (BI === "Age") {
-                        Sim.events.push(`${this.DName}, aged ${this.age}, died from old age.`);
+                        this.Die("Age");
                     }
                 } else {
                     this.TriggerSuperAIDs();
@@ -173,6 +171,16 @@ class _Human {
                 break;
             }
         }
+    }
+
+    Die (cause) {
+        this.dead = true;
+        switch (cause) {
+            case "Age": Sim.events.push(`${this.DName}, aged ${this.age}, died from old age.`); break;
+            case "Collapse": Sim.events.push(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. `); break;
+            default: Sim.events.push(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}.`); break;
+        }
+        this.deathReason = cause;
     }
 
     Birthday() {
