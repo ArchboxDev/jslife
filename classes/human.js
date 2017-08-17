@@ -230,6 +230,10 @@ class _Human {
             }
         }
     }
+    
+    Pay(amn) {
+        this.family.wealth += amn;
+    }
 
     Die (cause) {
         this.dead = true;
