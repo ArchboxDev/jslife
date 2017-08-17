@@ -25,10 +25,10 @@ class _Human {
 
         //MBTI values, using the "closed" values as 0 and the "open" values as 1000. 
         this.PersonalityValues = {
-            Introvertion: Math.floor(Math.random()*1000),
-            Observance: Math.floor(Math.random()*1000),
-            Thinking: Math.floor(Math.random()*1000),
-            Judging: Math.floor(Math.random()*1000)
+            Mind: Math.floor(Math.random()*1000),
+            Energy: Math.floor(Math.random()*1000),
+            Nature: Math.floor(Math.random()*1000),
+            Tactics: Math.floor(Math.random()*1000)
         }
 
         this.Traits = {};
@@ -67,11 +67,31 @@ class _Human {
         return h;
     }
 
+    get HighestPersonalityValue() {
+        let p;
+        let v;
+
+        for (const pp in this.PersonalityValues) {
+            const pv = this.PersonalityValues[pp];
+            if (typeof p === "undefined" || pv>=v) {
+                p = pp;
+                v = pv;
+            }
+        }
+
+        return p;
+    }
+
+    get SuitableJobs() {
+        return Object.keys(Sim.Jobs).filter(j=>Sim.JobPersoMatches[j]===this.HighestPersonalityValue);
+    }
+
     get DName() {
         let c = this.male!==null?this.male?39:213:124; //Male:Female:SUPER AIDS//
 
         return this.name.full.colour(c);
     }
+    
     //For displays
     get CondensedPersonality () {
 
@@ -88,10 +108,10 @@ class _Human {
         const stimuliTypes = {
             //According to 16personalities research (https://www.16personalities.com/articles/personality-bites-the-types-and-stress-eating)
             Eating: {
-                Introvertion: ["lower", 300],
-                Observance: ["higher", 600],
-                Thinking: ["higher", 700],
-                Judging: ["lower", 300]
+                Mind: ["lower", 300],
+                Energy: ["higher", 600],
+                Nature: ["higher", 700],
+                Tactics: ["lower", 300]
             }
         }
 
@@ -158,8 +178,8 @@ class _Human {
     }
     
     ChooseJob() {
-        // Todo: Change based on traits, skills, etc //
-        this.job = new Sim.Job(this);
+        const s = this.SuitableJobs;
+        this.job = new Sim.Job(this, s[Math.floor(Math.random()*s.length)]);
     }
 
     DeathCheck() {
@@ -301,3 +321,4 @@ function SuperAIDs() {
     console.log(`Everybody caught ${"SUPER AIDS".colour(196)} and died.`);
 }
 */
+
