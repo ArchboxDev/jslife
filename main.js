@@ -84,6 +84,7 @@ class _Sim {
         require("./classes/human");
         require("./classes/family");
         require("./classes/house");
+        require("./classes/relationship");
     }
 
     _eventsIO_On() {

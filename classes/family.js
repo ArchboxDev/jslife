@@ -40,8 +40,9 @@ class _Family {
             const h1 = new Sim.Human(undefined, undefined, true, this);
             const h2 = new Sim.Human(undefined, undefined, false, this);
 
-            h1.Relationships[h2.index] = "Married";
-            h2.Relationships[h1.index] = "Married";
+            const r = new Sim.Relation(h1, h2, 100, 100, ["Married"]);
+            h1.Relationships[h2.index] = r;
+            h2.Relationships[h1.index] = r;
 
             this.members.push(h1, h2);
 
@@ -51,16 +52,13 @@ class _Family {
                     const mAge = (h1.age<=h2.age?h1.age:h2.age)-18;
                     const age = Math.floor(Math.random()*(mAge-3)+3);
 
-                    const x = {
-                        Relationships: []
-                    }
-                    x.Relationships[h1.index] = "Parent";
-                    x.Relationships[h2.index] = "Parent";
+                    const h = new Sim.Human(undefined, age, undefined, this);
 
-                    const h = new Sim.Human(undefined, age, undefined, this, x);
+                    h.Relationships[h1.index] = new Sim.Relation(h, h1, 100, 0, ["Parent"]);
+                    h.Relationships[h2.index] = new Sim.Relation(h, h2, 100, 0, ["Parent"]);
                     
-                    h1.Relationships[h.index] = "Child";
-                    h2.Relationships[h.index] = "Child";
+                    h1.Relationships[h.index] = new Sim.Relation(h1, h, 100, 0, ["Child"]);
+                    h2.Relationships[h.index] = new Sim.Relation(h2, h, 100, 0, ["Child"]);
 
                     a.push(h);
                 }
