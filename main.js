@@ -126,6 +126,8 @@ class _Sim {
 
         this.Year();
 
+        console.log();
+
         if (this.timeout<=0) {
                 this._year = this.year;
                 this.year = this.lastS;
@@ -196,8 +198,6 @@ class _Sim {
 
         this.Populate();
 
-        console.log();
-        
         this.EventsUpdate();
 
         process.stdin.setRawMode(true);
