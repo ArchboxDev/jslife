@@ -135,7 +135,7 @@ class _Sim {
                 for (const h of this.families) {
                     console.log(`The ${h.DName} Family`);
                     for (const f of h.members) {
-                        console.log(`- ${f.DName} (${f.age}), died of ${f.deathReason}`);
+                        console.log(`- ${f.DName} (${f.age}), a ${f.job.DName}, died of ${f.deathReason}`);
 
                         /*DEBUG
                         console.log(`${f.PersonalityDice("Eating")}`);
