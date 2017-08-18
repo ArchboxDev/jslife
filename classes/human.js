@@ -48,6 +48,15 @@ class _Human {
         this.index = Sim.people.push(this);
     }
 
+    get temp() {
+        return {
+            HisHer: this.male?"His":"Her",
+            hisher: this.male?"his":"her",
+            HeShe : this.male?"He":"She",
+            heshe : this.male?"he":"she"
+        }
+    }
+
     get Health() {
         let h = 100;
 
@@ -176,7 +185,7 @@ class _Human {
         const s = this.SuitableJobs;
         this.job = new Sim.Job(this, s[Math.floor(Math.random()*s.length)]);
         if (!Sim.muteNewJobs)
-            Sim.events.push(`${this.DName} has become a ${this.job.DName}.`);
+            new Sim.Event(`${this.DName} has become a ${this.job.DName}.`, this);
     }
 
     DeathCheck() {
@@ -255,9 +264,9 @@ class _Human {
     Die (cause) {
         this.dead = true;
         switch (cause) {
-            case "Age": Sim.events.push(`${this.DName}, aged ${this.age}, died from old age. ${this.age?"He":"She"} was a ${this.job.DName}.`); break;
-            case "Collapse": Sim.events.push(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. ${this.age?"He":"She"} was a ${this.job.DName}.`); break;
-            default: Sim.events.push(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}. ${this.age?"He":"She"} was a ${this.job.DName}.`); break;
+            case "Age": new Sim.Event(`${this.DName}, aged ${this.age}, died from old age. {{HeShe}} was a ${this.job.DName}.`, this); break;
+            case "Collapse": new Sim.Event(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. {{HeShe}} was a ${this.job.DName}.`, this); break;
+            default: new Sim.Event(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}. {{HeShe}} was a ${this.job.DName}.`, this); break;
         }
         this.deathReason = cause;
     }
@@ -269,7 +278,7 @@ class _Human {
 
         switch (this.age) {
             case 5:
-                e.push(`${this.DName} is starting ${this.age?"his":"her"} first year of school.`);
+                e.push(`${this.DName} is starting {{hisher}} first year of school.`);
                 break;
             case 13:
                 e.push(`It's ${this.DName}'s 13th birthday!`);
@@ -290,14 +299,14 @@ class _Human {
             this.ChooseJob();
         
         for (const ev of e)
-            Sim.events.push(ev);
+            new Sim.Event(ev, this);
     }
 
     TriggerSuperAIDs() {
         this.male = null;
         this.SuperAIDs = true;
 
-        Sim.events.push(`${this.DName} has caught ${"SUPER AIDS".colour(196)}!`);
+        new Sim.Event(`${this.DName} has caught ${"SUPER AIDS".colour(196)}!`, this);
     }
 
     RerollGeneration() {

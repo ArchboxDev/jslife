@@ -1,8 +1,9 @@
 {
     "Globals" : {
-        "fs"     : "fs"
+        "fs"      : "fs",
+        "Mustache": "mustache"
     },
     "Modules" : {
-        "colour" : "./colour"
+        "colour"  : "./colour"
     }
 }
