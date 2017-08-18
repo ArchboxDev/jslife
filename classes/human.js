@@ -180,7 +180,8 @@ class _Human {
     ChooseJob() {
         const s = this.SuitableJobs;
         this.job = new Sim.Job(this, s[Math.floor(Math.random()*s.length)]);
-        Sim.events.push(`${this.DName} has became a ${this.job.DName}!`);
+        if (!Sim.muteNewJobs)
+            Sim.events.push(`${this.DName} has become a ${this.job.DName}.`);
     }
 
     DeathCheck() {

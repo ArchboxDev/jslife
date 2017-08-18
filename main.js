@@ -2,9 +2,6 @@ require("./lib/config");
 //require("keypress")(process.stdin);
 
 class _Sim {
-    constructor() {
-    }
-
     NameInfo() {
         const fM = this.names.first.male.length;
         const fF = this.names.first.female.length;
@@ -170,18 +167,18 @@ class _Sim {
     }
 
     Init() {
-        console.log(`
-        #############################################################################
-        #                                                   prealpha 17/8/17        #
-        #     #   ### ### ###   #== ### ##   # # # #   ### ### ### ###              #
-        #     #    #  #   #__   ###  #  # # ## # # #   # #  #  # # # #              #
-        #     #    #  ### #       #  #  #  # # # # #   ###  #  # # ###              #
-        #     ### ### #   ###   ### ### #    # ### ### # #  #  ### # |              #
-        #     written out of boredom by Bubbie, Mount2010, and other contributors   #
-        #     also see the Python port pylife and the Java port jarlife             #
-        #                                                                           #
-        #############################################################################
-        `.colour(220));
+        const wid = process.stdout.columns;
+        console.log(
+`${"#".repeat(wid)}
+#                                                   prealpha 17/8/17     ${" ".repeat(wid-74)}#
+#     #   ### ### ###   #== ### ##   # # # #   ### ### ### ###           ${" ".repeat(wid-74)}#
+#     #    #  #   #__   ###  #  # # ## # # #   # #  #  # # # #           ${" ".repeat(wid-74)}#
+#     #    #  ### #       #  #  #  # # # # #   ###  #  # # ###           ${" ".repeat(wid-74)}#
+#     ### ### #   ###   ### ### #    # ### ### # #  #  ### # |           ${" ".repeat(wid-74)}#
+#     written out of boredom by Bubbie, Mount2010, and other contributors${" ".repeat(wid-74)}#
+#     also see the Python port pylife and the Java port jarlife          ${" ".repeat(wid-74)}#
+#                                                                        ${" ".repeat(wid-74)}#
+${"#".repeat(wid)}`.colour(220));
 
         console.log(`Running on ${process.platform} ${process.arch}.`.colour(221));
 
@@ -198,6 +195,8 @@ class _Sim {
 
         console.log("[Populating]".colour(63));
 
+        this.muteNewJobs = true;
+
         this.year = 0;
         this.events = [];
 
@@ -207,6 +206,8 @@ class _Sim {
         this.events = [];
 
         this.Populate();
+
+        this.muteNewJobs = false;
 
         this.EventsUpdate();
 
