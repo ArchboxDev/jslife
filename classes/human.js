@@ -97,11 +97,6 @@ class _Human {
 
     }
 
-    GenderText (capital) {
-        if (this.male) {if (capital) {return 'He'} else {return 'he'}}
-        else if (!this.male) {if (capital) {return 'She'} else {return 'she'}};
-    }
-
     //Rolls a dice and sees if this person is likely to react positively.
     PersonalityDice (stimuli) {
         //If the person has a indicator higher (or lower, specify true for the first argument) than the indicator here, they will react positively. Else, they will be neutral.
@@ -260,9 +255,9 @@ class _Human {
     Die (cause) {
         this.dead = true;
         switch (cause) {
-            case "Age": Sim.events.push(`${this.DName}, aged ${this.age}, died from old age. ${this.GenderText(true)} was a ${this.job.DName}.`); break;
-            case "Collapse": Sim.events.push(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. ${this.GenderText(true)} was a ${this.job.DName}.`); break;
-            default: Sim.events.push(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}. ${this.GenderText(true)} was a ${this.job.DName}.`); break;
+            case "Age": Sim.events.push(`${this.DName}, aged ${this.age}, died from old age. ${this.age?"He":"She"} was a ${this.job.DName}.`); break;
+            case "Collapse": Sim.events.push(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. ${this.age?"He":"She"} was a ${this.job.DName}.`); break;
+            default: Sim.events.push(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}. ${this.age?"He":"She"} was a ${this.job.DName}.`); break;
         }
         this.deathReason = cause;
     }
@@ -274,7 +269,7 @@ class _Human {
 
         switch (this.age) {
             case 5:
-                e.push(`${this.DName} is starting ${this.GenderText(false)} first year of school.`);
+                e.push(`${this.DName} is starting ${this.age?"his":"her"} first year of school.`);
                 break;
             case 13:
                 e.push(`It's ${this.DName}'s 13th birthday!`);
