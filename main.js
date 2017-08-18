@@ -168,7 +168,14 @@ class _Sim {
 
     Init() {
         const wid = process.stdout.columns;
-        console.log(
+        if (wid < 74) {//fallback in case terminal is too small
+        console.log(`
+Life Simulator
+prealpha 17/8/17
+by Bubbie, Mount2010, and other contributors
+        `.colour(220));}
+        else {
+            console.log(
 `${"#".repeat(wid)}
 #                                                   prealpha 17/8/17     ${" ".repeat(wid-74)}#
 #     #   ### ### ###   #== ### ##   # # # #   ### ### ### ###           ${" ".repeat(wid-74)}#
@@ -179,7 +186,7 @@ class _Sim {
 #     also see the Python port pylife and the Java port jarlife          ${" ".repeat(wid-74)}#
 #                                                                        ${" ".repeat(wid-74)}#
 ${"#".repeat(wid)}`.colour(220));
-
+        }
         console.log(`Running on ${process.platform} ${process.arch}.`.colour(221));
 
         console.log("[Loading Modules]".colour(28));
