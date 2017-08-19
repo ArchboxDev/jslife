@@ -15,4 +15,6 @@ Use `node main.js` to start the game.
 
 # Other stuffs
 
-[Python version by ry00000](https://github.com/ry00000/PyLife)
+[Python version by ry00000](https://github.com/ArchboxDev/pylife)
+
+[Java version by lordjbs](https://github.com/ArchboxDev/jarlife)
