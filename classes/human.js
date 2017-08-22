@@ -50,10 +50,10 @@ class _Human {
 
     get temp() {
         return {
-            HisHer: this.male?"His":"Her",
-            hisher: this.male?"his":"her",
-            HeShe : this.male?"He":"She",
-            heshe : this.male?"he":"she"
+            HisHer: this.male===null?"Its":this.male?"His":"Her",
+            hisher: this.male===null?"its":this.male?"his":"her",
+            HeShe : this.male===null?"It":this.male?"He":"She",
+            heshe : this.male===null?"it":this.male?"he":"she"
         }
     }
 
@@ -68,10 +68,8 @@ class _Human {
 
         h = this.HealthValues.Happiness/100<=0.25?h-25:h;
 
-        h += this.age-32;
-
         if (this.SuperAIDs)
-            h += 10000;
+            h = 0.42;
 
         return h;
     }
@@ -198,12 +196,12 @@ class _Human {
             Health : {
                 Pos: 0,
                 Sp : 2500,
-                Val: this.Health
+                Val: (2500/this.Health)*25
             },
             Age    : {
                 Pos: 2500,
                 Sp : 2500,
-                Val: (this.age/20)*30,
+                Val: this.age>40?(this.age/2)*30:0,
             },
             Rand   : {
                 Pos: 5000,
@@ -221,7 +219,7 @@ class _Human {
                 Val: 0
             }
         };
-        
+
         const Roll = Math.floor(Math.random()*(Sim.Roll()?8000:4000-Sim.Roll()?1000:8000)+1000);
 
         for (const BI in Block) {
@@ -327,4 +325,3 @@ function SuperAIDs() {
     console.log(`Everybody caught ${"SUPER AIDS".colour(196)} and died.`);
 }
 */
-
