@@ -3,6 +3,9 @@ I wrote this in 8 hours with nothing but coffee and sleep deprevation.
 
 # Requirements
 Node 8+ or any Node version supporting ES6.
+
+Mustache (npm install mustache)
+
 Use `node main.js` to start the game.
 
 # Collaborators
