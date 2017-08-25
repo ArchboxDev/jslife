@@ -1,0 +1,29 @@
+{
+  "name": "jslife",
+  "version": "1.0.0",
+  "description": "I wrote this in 8 hours with nothing but coffee and sleep deprivation.",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/archboxdev/jslife.git"
+  },
+  "keywords": [
+    "life",
+    "javascript"
+  ],
+  "author": "bubbie with others",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/archboxdev/jslife/issues"
+  },
+  "homepage": "https://github.com/archboxdev/jslife#readme",
+  "dependencies": {
+    "mustache": "^2.3.0"
+  }
+}
