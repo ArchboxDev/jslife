@@ -58,7 +58,7 @@ class _Job {
         this.level++;
         this.exp = 0;
 
-        Sim.events.push(`${this.employee.DName} has been promoted to a ${this.DName}.`);
+        new Sim.Event(`${this.employee.DName} has been promoted to a ${this.DName}.`, this.employee);
     }
 
     AddExp(amn) {

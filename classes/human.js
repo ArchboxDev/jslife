@@ -48,6 +48,15 @@ class _Human {
         this.index = Sim.people.push(this);
     }
 
+    get temp() {
+        return {
+            HisHer: this.male===null?"Its":this.male?"His":"Her",
+            hisher: this.male===null?"its":this.male?"his":"her",
+            HeShe : this.male===null?"It":this.male?"He":"She",
+            heshe : this.male===null?"it":this.male?"he":"she"
+        }
+    }
+
     get Health() {
         let h = 100;
 
@@ -59,10 +68,8 @@ class _Human {
 
         h = this.HealthValues.Happiness/100<=0.25?h-25:h;
 
-        h += this.age-32;
-
         if (this.SuperAIDs)
-            h += 10000;
+            h = 0.42;
 
         return h;
     }
@@ -95,23 +102,6 @@ class _Human {
     //For displays
     get CondensedPersonality () {
 
-    }
-
-    //Gendered text
-    get he () {
-        if (this.male) return "he"; else return "she";
-    }
-    
-    get his () {
-        if (this.male) return "his"; else return "her";
-    }
-
-    get He () {
-        if (this.male) return "He"; else return "She";
-    }
-
-    get His () {
-        if (this.male) return "His"; else return "Her";
     }
 
     //Rolls a dice and sees if this person is likely to react positively.
@@ -193,7 +183,7 @@ class _Human {
         const s = this.SuitableJobs;
         this.job = new Sim.Job(this, s[Math.floor(Math.random()*s.length)]);
         if (!Sim.muteNewJobs)
-            Sim.events.push(`${this.DName} has become a ${this.job.DName}.`);
+            new Sim.Event(`${this.DName} has become a ${this.job.DName}.`, this);
     }
 
     DeathCheck() {
@@ -206,12 +196,12 @@ class _Human {
             Health : {
                 Pos: 0,
                 Sp : 2500,
-                Val: this.Health
+                Val: (2500/this.Health)*25
             },
             Age    : {
                 Pos: 2500,
                 Sp : 2500,
-                Val: (this.age/20)*30,
+                Val: this.age>40?(this.age/2)*30:0,
             },
             Rand   : {
                 Pos: 5000,
@@ -229,7 +219,7 @@ class _Human {
                 Val: 0
             }
         };
-        
+
         const Roll = Math.floor(Math.random()*(Sim.Roll()?8000:4000-Sim.Roll()?1000:8000)+1000);
 
         for (const BI in Block) {
@@ -272,9 +262,9 @@ class _Human {
     Die (cause) {
         this.dead = true;
         switch (cause) {
-            case "Age": Sim.events.push(`${this.DName}, aged ${this.age}, died from old age. ${this.He} was a ${this.job.DName}.`); break;
-            case "Collapse": Sim.events.push(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. ${this.He} was a ${this.job.DName}.`); break;
-            default: Sim.events.push(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}. ${this.He} was a ${this.job.DName}.`); break;
+            case "Age": new Sim.Event(`${this.DName}, aged ${this.age}, died from old age. {{HeShe}} was a ${this.job.DName}.`, this); break;
+            case "Collapse": new Sim.Event(`${this.DName}, aged ${this.age}, couldn't run fast enough while their home was collapsing. {{HeShe}} was a ${this.job.DName}.`, this); break;
+            default: new Sim.Event(`${this.DName}, aged ${this.age}, died from ${cause.colour(160)}. {{HeShe}} was a ${this.job.DName}.`, this); break;
         }
         this.deathReason = cause;
     }
@@ -286,7 +276,7 @@ class _Human {
 
         switch (this.age) {
             case 5:
-                e.push(`${this.DName} is starting ${this.his} first year of school.`);
+                e.push(`${this.DName} is starting {{hisher}} first year of school.`);
                 break;
             case 13:
                 e.push(`It's ${this.DName}'s 13th birthday!`);
@@ -307,14 +297,14 @@ class _Human {
             this.ChooseJob();
         
         for (const ev of e)
-            Sim.events.push(ev);
+            new Sim.Event(ev, this);
     }
 
     TriggerSuperAIDs() {
         this.male = null;
         this.SuperAIDs = true;
 
-        Sim.events.push(`${this.DName} has caught ${"SUPER AIDS".colour(196)}!`);
+        new Sim.Event(`${this.DName} has caught ${"SUPER AIDS".colour(196)}!`, this);
     }
 
     RerollGeneration() {
@@ -335,4 +325,3 @@ function SuperAIDs() {
     console.log(`Everybody caught ${"SUPER AIDS".colour(196)} and died.`);
 }
 */
-

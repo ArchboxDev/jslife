@@ -82,7 +82,8 @@ class _Sim {
         require("./classes/family");
         require("./classes/house");
         require("./classes/relationship");
-        require("./classes/job")
+        require("./classes/job");
+        require("./classes/event");
     }
 
     _eventsIO_On() {
@@ -135,7 +136,7 @@ class _Sim {
                     console.log(`The ${h.DName} Family`);
                     for (const f of h.members) {
                         console.log(`- ${f.DName} (${f.age}), a ${f.job.DName}, died of ${f.deathReason}`);
-
+                        
                         /*DEBUG
                         console.log(`${f.PersonalityDice("Eating")}`);
                         console.log(`${f.PersonalityValues.Introvertion} ${f.PersonalityValues.Observance} ${f.PersonalityValues.Thinking} ${f.PersonalityValues.Judging}`);
@@ -156,8 +157,10 @@ class _Sim {
 
         console.log(`[Year ${this.year}]`.colour(75));
 
-        for (const e of this.events)
-            console.log(e);
+        for (const e of this.events) {
+            const t = Mustache.render(e.message, e.meta.temp);
+            console.log(t);
+        }
         this.events = [];
 
         if (this.year === 1)

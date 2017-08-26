@@ -3,6 +3,9 @@ I wrote this in 8 hours with nothing but coffee and sleep deprevation.
 
 # Requirements
 Node 8+ or any Node version supporting ES6.
+
+Mustache (npm install mustache)
+
 Use `node main.js` to start the game.
 
 # Collaborators
@@ -15,4 +18,6 @@ Use `node main.js` to start the game.
 
 # Other stuffs
 
-[Python version by ry00000](https://github.com/ry00000/PyLife)
+[Python version by ry00000](https://github.com/ArchboxDev/pylife)
+
+[Java version by lordjbs](https://github.com/ArchboxDev/jarlife)
